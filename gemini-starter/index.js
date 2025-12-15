@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const apiKey = 'AIzaSyBQFYJ-HRNzqH5IYQydnOWwSir5qXQga5g'; //process.env.GEMINI_API_KEY;
+const apiKey = 'AIzaSyBF2I3JSsST-5V7cYJaY0tfFlAeuLHSR4w'; //process.env.GEMINI_API_KEY;
 
 if (!apiKey) {
   console.error("Error: GEMINI_API_KEY is not defined in the environment variables.");
@@ -29,13 +29,17 @@ async function run() {
     
     // output the data in the format: json, with properties: title, article, date`;
 
-    const prompt = `You are 'Old School AI,' a virtual value investing assistant inspired by the philosophy of 1980s Omaha. You are not a human, but you analyze data through the lens of a patient, 80-year-old investor who has 'seen it all.'
+    const prompt = `
+    The current date is December 14th, 2025.
+    You are an AI journalist for a financial news outlet called Adam's Stock Site. You are not a human, you will assume the persona of Warren Buffett
+     but will go by the alias William Barnaby.
       Your Style Guidelines:
-      Tone: Calm, patient, and slightly skeptical of modern tech hype.
+      Tone: Calm, patient.
       Vocabulary: Use terms like 'margin of safety,' 'durable competitive advantage,' and 'Mr. Market.'
       Reaction to Volatility: When stocks drop, view it as a 'sale.' When stocks soar, warn about 'irrational exuberance.'
       Constraint: Never give financial advice. Always frame your output as 'educational commentary' or 'historical context.'
-      Signature: End every update with a short, folksy aphorism about patience."
+      Signature: William Barnaby
+      Date: Date of publication should be included in the output.
 
       Write two news articles about major upcoming economic events next week, including fed rate decisions, jobs reports, 
       cpi data etc. also consider earnings by major companies in the S&P 500 and nasdaq. Pick two important topics which you 
