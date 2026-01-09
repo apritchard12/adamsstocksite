@@ -1,0 +1,38 @@
+Phase 1: Create the Free VM on Google Cloud
+
+   1. Go to Console: Navigate to Compute Engine > VM instances.
+   2. Create: Click Create Instance.
+   3. Name: Give it a name (e.g., news-agent).
+   4. Region (CRITICAL): You must select us-central1 (Iowa), us-west1 (Oregon), or us-east1 (South Carolina). Other regions are not free.
+   5. Machine Configuration:
+       * Series: E2
+       * Machine type: e2-micro (2 vCPU, 1 GB memory).
+   6. Boot Disk:
+       * Click Change.
+       * OS: Ubuntu (select Ubuntu 22.04 LTS).
+       * Boot disk type: Standard persistent disk (Balanced/SSD are not free).
+       * Size: 30 GB.
+   7. Networking (The Cost-Saving Step):
+       * Expand Advanced options (at the bottom).
+       * Expand Networking.
+       * Under Network interfaces, click the default interface to edit it.
+       * IP Stack Type: Select IPv4 and IPv6 (Dual Stack).
+       * External IPv4 address: Select None (This saves you $4/month).
+       * External IPv6 address: Select Automatically assigned.
+       * Click Done.
+   8. Create: Click the Create button at the bottom.
+
+  Phase 2: Open the Firewall (IPv6)
+
+  By default, GCP blocks all incoming traffic. You need to let the internet in.
+
+   1. Go to VPC network > Firewall.
+   2. Click Create Firewall Rule.
+   3. Name: allow-web-ipv6.
+   4. Targets: "All instances in the network".
+   5. Source filter: IPv6 ranges.
+   6. Source IPv6 ranges: ::/0 (This means "The entire internet").
+   7. Protocols and ports:
+       * Check TCP.
+       * Enter ports: 80, 443, and 3000 (Since Next.js usually defaults to 3000).
+   8. Click Create.

@@ -1,0 +1,54 @@
+For context these are the articles the AI writer published earlier this week:
+
+Response:
+**Date:** December 21, 2025
+
+***
+
+### **Measuring the Temperature of Mr. Market: The Upcoming PCE Report**
+
+**By William Barnaby**
+
+As we approach the quietude of the holiday week, the financial markets turn their gaze toward a specific set of numbers that often serve as a compass for the Federal Reserve. On **Tuesday, December 23, 2025**, the Bureau of Economic Analysis is scheduled to release the Personal Consumption Expenditures (PCE) Price Index for November.
+
+For the student of history, it is important to understand why this metric holds weight. While the Consumer Price Index (CPI) grabs headlines, the PCE is the preferred gauge for our central bankers. It adjusts for the substitution effect—acknowledging that when the price of beef rises, the rational consumer might switch to chicken. It offers a more durable view of inflation, stripping away some of the volatility that can cloud our judgment.
+
+**Why This Matters Now**
+
+We find ourselves in a peculiar economic moment. If the report shows inflation cooling faster than anticipated, we may see a bout of irrational exuberance in the markets, with stock prices detached from their underlying business fundamentals. Conversely, a "hot" report indicating stubborn prices could send Mr. Market into a depressive state, marking down the prices of wonderful businesses indiscriminately.
+
+From an educational standpoint, this report is a test of temperament. The intelligent investor does not react to a single month’s data point by overhauling their portfolio. Instead, we look at the PCE to understand the eroding power of inflation on the dollar over the long term. If purchasing power is diluting, owning productive assets with a "moat"—the ability to raise prices without losing customers—becomes the only true hedge.
+
+Regardless of the number released on Tuesday, remember that the stock market is a voting machine in the short run, but a weighing machine in the long run. Use this data for context, not for frantic activity.
+
+**Image:**
+https://images.unsplash.com/photo-1611974765270-ca1258634369?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80
+**Dimensions:** 1000x667
+
+**For further study:**
+https://www.bea.gov/data/personal-consumption-expenditures-price-index
+
+***
+
+### **Capital Allocation and the Long View: Durable Goods Orders**
+
+**By William Barnaby**
+
+Also occurring this week, amidst the festive cheer, is a report that speaks volumes about business confidence and capital allocation. On **Tuesday, December 23, 2025**, the Census Bureau will release the Advance Report on Durable Goods Manufacturers' Shipments, Inventories, and Orders for November.
+
+In the lexicon of finance, "durable goods" are items intended to last three years or more—think machinery, computers, and aircraft. This report is significant because it strips away the noise of daily consumables and focuses on significant capital outlays. When a business management team decides to purchase heavy machinery, they are expressing a vote of confidence in the future, often years down the road.
+
+**Historical Context and Educational Commentary**
+
+Why should the patient investor care about factory orders? Because it serves as a proxy for the broader economy's appetite for growth. A decline in new orders for non-defense capital goods (excluding aircraft) often signals that managers are tightening their belts, perhaps fearing a recession or seeking a greater margin of safety in their balance sheets.
+
+However, one must be wary of headlines. Durable goods numbers are notoriously volatile month-to-month. A single large order for Boeing jets can skew the data, creating a mirage of prosperity, just as a lull in orders can paint a false picture of doom.
+
+If the numbers on Tuesday are lower than expected and the market drops, view it through the lens of a business owner. Has the intrinsic value of a solid company changed because factory orders dipped in November? Unlikely. Volatility caused by such macroeconomic reports often presents the "sale" prices we covet. We look for companies with a durable competitive advantage that can weather these cycles of capex expansion and contraction, regardless of what the weekly data suggests.
+
+**Image:**
+https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80
+**Dimensions:** 1000x667
+
+**For further study:**
+https://www.census.gov/manufacturing/m3/index.html
