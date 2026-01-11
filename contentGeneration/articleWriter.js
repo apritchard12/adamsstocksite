@@ -15,10 +15,10 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 // Create a local pool for this script since lib/db.js relies on Next.js runtime or different path structure
 // that might be brittle in standalone script execution.
 const pool = mysql.createPool({
-    host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || 'stock_news',
+    host: 'localhost',
+    user: 'stock_user',
+    password: 'password',
+    database: 'stock_news',
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
@@ -107,37 +107,39 @@ async function saveArticlesToDb(articles) {
 
             for (const article of articles) {
 
-                // Prepare query
+                                // Prepare query
 
-                // MOCK_NEWS/Schema fields: title, summary, content, category, related_tickers, author, image_url
+                                // MOCK_NEWS/Schema fields: title, summary, content, category, related_tickers, author, image_url, active
 
-                const query = `
+                                const query = `
 
-                    INSERT INTO articles (title, summary, content, category, related_tickers, author, image_url)
+                                    INSERT INTO articles (title, summary, content, category, related_tickers, author, image_url, active)
 
-                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
 
-                `;
+                                `;
 
-                
+                                
 
-                const values = [
+                                const values = [
 
-                    article.title,
+                                    article.title,
 
-                    article.summary,
+                                    article.summary,
 
-                    article.content,
+                                    article.content,
 
-                    article.category || 'Markets',
+                                    article.category || 'Markets',
 
-                    article.related_tickers || '',
+                                    article.related_tickers || '',
 
-                    article.author || 'William Barnaby',
+                                    article.author || 'William Barnaby',
 
-                    article.image_url || null
+                                    article.image_url || null,
 
-                ];
+                                    1 // active
+
+                                ];
 
 
 

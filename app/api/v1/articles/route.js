@@ -5,7 +5,7 @@ import { MOCK_NEWS } from '../../../../constants';
 export async function GET() {
   try {
     // Try to query the database
-    const [rows] = await pool.query('SELECT * FROM articles ORDER BY created_at DESC');
+    const [rows] = await pool.query('SELECT * FROM articles WHERE active = 1 ORDER BY created_at DESC');
     
     // Transform DB rows to match API expectations if necessary
     // Currently, DB columns match: id, title, summary, content, category, related_tickers, author, image_url, created_at
