@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import pool from '../../../../lib/db';
 import { MOCK_NEWS } from '../../../../constants';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     // Try to query the database
