@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { TrendingUp, Newspaper, Globe, ChevronRight } from 'lucide-react';
 
 const formatTimeAgo = (dateString) => {
@@ -24,7 +25,7 @@ const NewsCard = ({ news, onSelectTicker }) => {
     : (Array.isArray(news.related_tickers) ? news.related_tickers : []);
 
   return (
-    <div className="group bg-gray-900/40 border border-gray-800 rounded-xl p-5 hover:bg-gray-800/60 hover:border-gray-700 transition-all cursor-pointer">
+    <Link href={`/articles/${news.id}`} className="block group bg-gray-900/40 border border-gray-800 rounded-xl p-5 hover:bg-gray-800/60 hover:border-gray-700 transition-all cursor-pointer">
       <div className="flex items-center gap-2 mb-3">
         <span className="text-[10px] font-bold uppercase tracking-widest text-blue-500 bg-blue-500/10 px-2 py-0.5 rounded">
           {news.category || 'MARKETS'}
@@ -45,6 +46,7 @@ const NewsCard = ({ news, onSelectTicker }) => {
               <button 
                 key={ticker}
                 onClick={(e) => {
+                  e.preventDefault(); // Prevent Link navigation
                   e.stopPropagation();
                   onSelectTicker(ticker);
                 }}
@@ -57,7 +59,7 @@ const NewsCard = ({ news, onSelectTicker }) => {
         </div>
         <ChevronRight className="w-4 h-4 text-gray-600 group-hover:text-blue-500 transition-colors" />
       </div>
-    </div>
+    </Link>
   );
 };
 
