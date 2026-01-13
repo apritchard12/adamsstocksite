@@ -65,21 +65,29 @@ const NewsCard = ({ news, onSelectTicker }) => {
 
 const HomeView = ({ onSelectTicker }) => {
   const [newsData, setNewsData] = useState([]);
+  const [indicesData, setIndicesData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchNews() {
+    async function fetchData() {
       try {
-        const res = await fetch('/api/v1/articles');
-        const data = await res.json();
-        setNewsData(data);
+        const [newsRes, indicesRes] = await Promise.all([
+          fetch('/api/v1/articles'),
+          fetch('/api/v1/indices')
+        ]);
+        
+        const news = await newsRes.json();
+        const indices = await indicesRes.json();
+        
+        setNewsData(news);
+        setIndicesData(indices);
       } catch (err) {
-        console.error("Failed to fetch news:", err);
+        console.error("Failed to fetch data:", err);
       } finally {
         setLoading(false);
       }
     }
-    fetchNews();
+    fetchData();
   }, []);
 
   return (
@@ -111,39 +119,24 @@ const HomeView = ({ onSelectTicker }) => {
                 </h2>
              </div>
              <div className="divide-y divide-gray-800">
-                {[{
-                  name: 'S&P 500',
-                  value: '5,123.44',
-                  change: '+1.24%'
-                },
-                {
-                  name: 'Nasdaq 100',
-                  value: '18,332.10',
-                  change: '+0.88%'
-                },
-                {
-                  name: 'Dow Jones',
-                  value: '38,904.04',
-                  change: '-0.12%'
-                },
-                {
-                  name: 'Bitcoin',
-                  value: '64,220.11',
-                  change: '+2.45%'
-                }].map(index => (
-                  <div key={index.name} className="p-4 flex justify-between items-center hover:bg-gray-800/50 transition-colors cursor-default">
-                    <div>
-                      <div className="text-sm font-bold text-gray-200">{index.name}</div>
-                      <div className="text-xs text-gray-500">Index Spot Price</div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-sm font-mono text-gray-100">{index.value}</div>
-                      <div className={`text-xs font-mono ${index.change.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>
-                        {index.change}
+                {indicesData.length > 0 ? (
+                  indicesData.map(index => (
+                    <div key={index.name} className="p-4 flex justify-between items-center hover:bg-gray-800/50 transition-colors cursor-default">
+                      <div>
+                        <div className="text-sm font-bold text-gray-200">{index.name}</div>
+                        <div className="text-xs text-gray-500">Index Spot Price</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm font-mono text-gray-100">{index.value}</div>
+                        <div className={`text-xs font-mono ${index.isPositive ? 'text-green-500' : 'text-red-500'}`}>
+                          {index.change}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                ) : (
+                  <div className="p-4 text-center text-xs text-gray-500">Loading Indices...</div>
+                )}
              </div>
           </div>
 
