@@ -5,7 +5,8 @@ git fetch origin
 git pull
 npm ci
 npm run build
-sudo pm2 reload adams-stock-site
+sudo pm2 stop adams-stock-site
+sudo pm2 start npm --name "adams-stock-site" -- start
 
 
 Phase 1: Create the Free VM on Google Cloud
