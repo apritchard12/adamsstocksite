@@ -3,11 +3,9 @@ Updates:
 cd /usr/local/adam/adamsstocksite/
 git fetch origin
 git pull
-sudo pm2 stop adams-stock-site
-rm -rf node_modules/
-npm i
+npm ci
 npm run build
-sudo pm2 start npm --name "adams-stock-site" -- start
+sudo pm2 reload adams-stock-site
 
 
 Phase 1: Create the Free VM on Google Cloud
