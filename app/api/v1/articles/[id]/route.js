@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import pool from '../../../../../lib/db';
 import { MOCK_NEWS } from '../../../../../constants';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 300; // Cache for 5 minutes
 
 export async function GET(request, { params }) {
   const { id } = await params;
