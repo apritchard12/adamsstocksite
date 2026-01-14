@@ -97,7 +97,7 @@ const HomeView = ({ onSelectTicker }) => {
         <div className="relative z-10 max-w-2xl">
           <div className="flex items-center gap-2 text-blue-400 mb-4">
             <Globe className="w-5 h-5" />
-            <span className="text-sm font-semibold tracking-wide uppercase">Market Intelligence</span>
+            <span className="text-sm font-semibold tracking-wide uppercase">Adam's Stock Site</span>
           </div>
           <h1 className="text-4xl font-bold text-white mb-4 tracking-tight">
             The future of finance is <span className="text-blue-500">real-time.</span>
