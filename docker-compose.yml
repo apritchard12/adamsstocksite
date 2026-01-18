@@ -1,8 +1,0 @@
-services:
-  app:
-    build: .
-    container_name: stock-site
-    restart: always
-    network_mode: "host"
-    env_file:
-      - .env

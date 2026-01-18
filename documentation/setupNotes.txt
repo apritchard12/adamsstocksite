@@ -1,8 +1,14 @@
-Deployment:
+Deployment (Standard / PM2):
 
 cd /usr/local/adam/adamsstocksite/
 git pull
-sudo docker compose up -d --build
+npm install
+npm run build
+# If first time:
+sudo pm2 start npm --name "adams-stock-site" -- start
+# If updating:
+sudo pm2 restart adams-stock-site
+sudo pm2 save
 
 
 Phase 1: Create the Free VM on Google Cloud
