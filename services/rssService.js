@@ -4,7 +4,7 @@ const parser = new Parser();
 
 const FEEDS = [
   { name: 'CNBC Finance', url: 'https://search.cnbc.com/rs/search/all/view.rss?partnerId=2000&keywords=finance' },
-  { name: 'Reuters Markets', url: 'https://www.reutersagency.com/feed/?best-topics=markets&post_type=best' },
+  { name: 'Investing.com News', url: 'https://www.investing.com/rss/news.rss' },
   { name: 'WSJ Markets', url: 'https://feeds.a.dj.com/rss/RSSMarketsMain.xml' }
 ];
 

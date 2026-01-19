@@ -88,7 +88,7 @@ async function saveArticlesToDb(articles) {
 
 async function run() {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-3-pro-preview" });
     const currentDate = new Date().toLocaleDateString('en-US', {
       timeZone: 'America/Chicago',
       month: 'long',
