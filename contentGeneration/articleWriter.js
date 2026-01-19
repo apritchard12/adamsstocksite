@@ -3,7 +3,7 @@ import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import dotenv from "dotenv";
 import pool from '../lib/db.js';
 import { getTopHeadlines } from '../services/rssService.js';
-import { getMarketIndices } from '../services/indicesService.js';
+import { fetchIndicesRaw } from '../services/indicesService.js';
 
 dotenv.config();
 
@@ -99,7 +99,7 @@ async function run() {
     console.log("Fetching real-world context...");
     const [headlines, indices] = await Promise.all([
       getTopHeadlines(5),
-      getMarketIndices()
+      fetchIndicesRaw()
     ]);
 
     const headlineContext = headlines.map(h => `- ${h.title} (Source: ${h.source})`).join('\n');

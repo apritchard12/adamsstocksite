@@ -22,7 +22,7 @@ try {
   cachedFn = (fn) => fn;
 }
 
-const fetchIndicesRaw = async () => {
+export const fetchIndicesRaw = async () => {
   try {
     const results = await Promise.all(
       INDICES_CONFIG.map(async (index) => {
