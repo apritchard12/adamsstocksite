@@ -3,7 +3,7 @@ import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import dotenv from "dotenv";
 import pool from '../lib/db.js';
 import { getTopHeadlines } from '../services/rssService.js';
-import { fetchIndicesRaw } from '../services/indicesService.js';
+import { fetchIndicesRaw } from '../services/indicesFetcher.js';
 
 dotenv.config();
 
