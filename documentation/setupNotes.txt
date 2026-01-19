@@ -4,10 +4,12 @@ cd /usr/local/adam/adamsstocksite/
 git pull
 npm install
 npm run build
-# If first time:
+# Start the Next.js App
 sudo pm2 start npm --name "adams-stock-site" -- start
-# If updating:
-sudo pm2 restart adams-stock-site
+
+# Start the Content Generation Scheduler
+sudo pm2 start contentGeneration/scheduler.js --name "stock-site-scheduler"
+
 sudo pm2 save
 
 

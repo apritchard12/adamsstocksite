@@ -2,17 +2,30 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import dotenv from "dotenv";
 import pool from '../lib/db.js';
+import { getTopHeadlines } from '../services/rssService.js';
+import { getMarketIndices } from '../services/indicesService.js';
 
 dotenv.config();
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const sesClient = new SESClient({ region: "us-east-1" });
+const sesClient = new SESClient({ 
+  region: process.env.AWS_REGION || "us-east-1",
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  }
+});
 
 async function sendEmail(content) {
+  if (!process.env.AWS_ACCESS_KEY_ID) {
+    console.log("Skipping email: AWS credentials not configured.");
+    return;
+  }
+
   const params = {
-    Source: "no-reply@adams-stock-site.com",
+    Source: process.env.EMAIL_FROM,
     Destination: {
-      ToAddresses: ["adam@example.com"],
+      ToAddresses: [process.env.EMAIL_TO],
     },
     Message: {
       Body: {
@@ -75,7 +88,7 @@ async function saveArticlesToDb(articles) {
 
 async function run() {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-3-pro-preview" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
     const currentDate = new Date().toLocaleDateString('en-US', {
       timeZone: 'America/Chicago',
       month: 'long',
@@ -83,27 +96,37 @@ async function run() {
       year: 'numeric'
     });
 
+    console.log("Fetching real-world context...");
+    const [headlines, indices] = await Promise.all([
+      getTopHeadlines(5),
+      getMarketIndices()
+    ]);
+
+    const headlineContext = headlines.map(h => `- ${h.title} (Source: ${h.source})`).join('\n');
+    const indexContext = indices.map(i => `- ${i.name}: ${i.value} (${i.change})`).join('\n');
+
     const prompt = `
     The current date is ${currentDate}.
+    
+    REAL-WORLD CONTEXT:
+    Top Financial Headlines Today:
+    ${headlineContext}
+    
+    Current Market Status:
+    ${indexContext}
+
     You are an AI journalist for a financial news outlet called Adam's Stock Site. You are not a human, you will assume the persona of Warren Buffett
     but will go by the alias William Barnaby.
+    
     Your Style Guidelines:
-    Tone: Calm, patient.
+    Tone: Calm, patient, wise.
     Vocabulary: Use terms like 'margin of safety,' 'durable competitive advantage,' and 'Mr. Market.'
     Reaction to Volatility: When stocks drop, view it as a 'sale.' When stocks soar, warn about 'irrational exuberance.'
-    Constraint: Never give financial advice. Always frame your output as 'educational commentary' or 'historical context.' don't add "signed author name" to the end of an articles content
-    Signature: William Barnaby
+    Constraint: Never give financial advice. Always frame your output as 'educational commentary' or 'historical context.'
     
     Task:
-    Write two news articles about major upcoming economic events next week, opec reports, jobs reports, retail numbers,
-    cpi data etc. also consider earnings by major companies in the S&P 500 and nasdaq. Pick two of the most important topics which you 
-    think will have high impact and explain the event and any possible outcomes and why they are important at this time.
-    
-    Additional guidance: If an earnings report is selected as a significant event occurring this week, make sure the article is just about
-    one company, and provides the specific date of the upcoming earnings report.
-    After selecting the two events to write about, do an independent search to verify that the subject you are to write about is in fact
-    occurring in the next week. If it was actually in the past, select a new event to write about.
-    If it is a FOMC meeting, please check to see that there was not a meeting that already occurred recently.
+    Based on the REAL-WORLD CONTEXT provided above, write two insightful articles. One should focus on a major headline or trend, and the other should analyze the current market performance or a specific company mentioned in the news.
+    Ensure your commentary reflects the current state of the market as provided in the context.
     
     Output Format:
     Strictly return a valid JSON array of objects. Do not wrap the JSON in markdown code blocks.
@@ -115,34 +138,19 @@ async function run() {
     - related_tickers: A comma-separated string of related stock tickers (e.g., "AAPL, MSFT").
     - author: "William Barnaby"
     - image_url: A relevant unsplash image URL if warranted (or null).
-    
-    Example JSON Structure:
-    [
-      {
-        "title": "Example Title",
-        "summary": "Example summary...",
-        "content": "Full article content...",
-        "category": "Economy",
-        "related_tickers": "SPY",
-        "author": "William Barnaby",
-        "image_url": "https://images.unsplash.com/..."
-      }
-    ]
     `;
     
-    console.log(`Sending prompt...`);
+    console.log(`Sending prompt to Gemini...`);
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
-    console.log("\nResponse:");
-    console.log(text);
-
+    
     const jsonStr = text.replace(/```json/g, '').replace(/```/g, '').trim();
     try {
         const parsed = JSON.parse(jsonStr);
         console.log("\nSuccessfully parsed JSON. Article count:", parsed.length);
-        await sendEmail(JSON.stringify(parsed, null, 2));
         await saveArticlesToDb(parsed);
+        await sendEmail(JSON.stringify(parsed, null, 2));
     } catch (e) {
         console.error("Failed to parse JSON response:", e);
         await sendEmail(text);
